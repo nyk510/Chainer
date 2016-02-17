@@ -16,12 +16,15 @@ def draw_digits(data, fname="fig.png"):
         draw_digit(data[i])
     plt.savefig(fname)
 
-def save_images(data_list,filename):
+def save_images(data_list,filename,shape="auto"):
     n_data = len(data_list)
     sqr = int(n_data**.5)
     plt.figure(figsize=(sqr,sqr))
     for i,data in enumerate(data_list):
-        plt.subplot(sqr,sqr,i+1)
+        if shape == "auto":
+            plt.subplot(sqr,sqr,i+1)
+        else:
+            plt.subplot(shape[0],shape[1],i+1)
         plt.gray()
         size = int(len(data)**.5)
         Z = data.reshape(size,size)
@@ -32,4 +35,4 @@ def save_images(data_list,filename):
         plt.subplots_adjust(hspace=.05)
         plt.subplots_adjust(wspace=.05)
     plt.savefig(filename)
-    print "save figure:{0}",filename
+    print "save figure:{}",filename
