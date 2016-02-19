@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from sklearn.datasets import fetch_mldata
 from sklearn.cross_validation import train_test_split
+import numpy as np
 
 def fetch_mnist():
     """
@@ -20,4 +21,5 @@ def fetch_mnist():
 
     data = [data_train, data_test]
     target = [target_train, target_test]
+    print '--- completed!! ---'
     return data,target
