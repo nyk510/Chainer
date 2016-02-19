@@ -18,13 +18,15 @@ def draw_digits(data, fname="fig.png"):
 
 def save_images(data_list,filename,shape="auto"):
     n_data = len(data_list)
-    sqr = int(n_data**.5)
+    if shape == "auto":
+        sqr = int(n_data**.5)
+        if sqr*sqr != n_data:
+            shape = (sqr+1,sqr+1)
+        else:
+            shape = (sqr,sqr)
     plt.figure(figsize=(sqr,sqr))
     for i,data in enumerate(data_list):
-        if shape == "auto":
-            plt.subplot(sqr,sqr,i+1)
-        else:
-            plt.subplot(shape[0],shape[1],i+1)
+        plt.subplot(shape[0],shape[1],i+1)
         plt.gray()
         size = int(len(data)**.5)
         Z = data.reshape(size,size)
@@ -36,3 +38,24 @@ def save_images(data_list,filename,shape="auto"):
         plt.subplots_adjust(wspace=.05)
     plt.savefig(filename)
     print "save figure:{}",filename
+
+def plot_images(data_list,fig_shape="auto"):
+    """
+    plotting data on current plt object.
+    """
+    for i,data in enumerate(data_list):
+        plt.subplot(shape[0],shape[1],i+1)
+        plt.gray()
+        if fig_shape == "auto":
+            fig_size = int(len(data)**.5)
+            if fig_size **2 != len(data):
+                fig_shape = (fig_size+1,fig_size+1)
+            else:
+                fig_shape = (fig_size,fig_size)
+        Z = data.reshape(fig_shape[0],fig_shape[1])
+        plt.imshow(Z,interpolation='nearest')
+        plt.tick_params(labelleft='off',labelbottom="off")
+        plt.tick_params(axis='both',which='both',left='off',bottom='off',
+                       right='off',top='off')
+        plt.subplots_adjust(hspace=.05)
+        plt.subplots_adjust(wspace=.05)
