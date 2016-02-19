@@ -113,20 +113,8 @@ class Classifer(Chain):
         return self.loss
 
 if __name__ == '__main__':
-    print 'fetch MNIST dataset'
-    mnist = fetch_mldata('MNIST original')
-    mnist.data   = mnist.data.astype(np.float32)
-    mnist.data  /= 255
-    mnist.target = mnist.target.astype(np.int32)
-
-    data_train,\
-    data_test,\
-    target_train,\
-    target_test = train_test_split(mnist.data, mnist.target)
-
-    data = [data_train, data_test]
-    target = [target_train, target_test]
-
+    from fetch_mnist import *
+    data,target = fetch_mnist()
         # test autoencoder training
     ae = AutoEncoder(
                     n_inputs=784,
@@ -140,7 +128,7 @@ if __name__ == '__main__':
         model=ae,
         optimizer=optimizers.AdaDelta,
         corruption_ratio=.3)
-    train_ae.start(epoch=20)
+    train_ae.start(epoch=5)
 
     filename = train_ae.condition_to_string()
     #save weight figure
